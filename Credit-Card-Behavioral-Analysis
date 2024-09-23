@@ -1,46 +1,30 @@
 {
  "cells": [
   {
-   "cell_type": "markdown",
-   "id": "17137307",
-   "metadata": {
-    "papermill": {
-     "duration": 0.002203,
-     "end_time": "2024-09-18T10:13:23.454140",
-     "exception": false,
-     "start_time": "2024-09-18T10:13:23.451937",
-     "status": "completed"
-    },
-    "tags": []
-   },
-   "source": [
-    "# Import LIB"
-   ]
-  },
-  {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "8a95f68b",
+   "id": "49ed4963",
    "metadata": {
     "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
     "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
     "execution": {
-     "iopub.execute_input": "2024-09-18T10:13:23.459316Z",
-     "iopub.status.busy": "2024-09-18T10:13:23.458923Z",
-     "iopub.status.idle": "2024-09-18T10:13:25.615581Z",
-     "shell.execute_reply": "2024-09-18T10:13:25.614747Z"
+     "iopub.execute_input": "2024-09-23T13:03:34.727488Z",
+     "iopub.status.busy": "2024-09-23T13:03:34.727032Z",
+     "iopub.status.idle": "2024-09-23T13:03:37.330500Z",
+     "shell.execute_reply": "2024-09-23T13:03:37.329398Z"
     },
     "papermill": {
-     "duration": 2.162052,
-     "end_time": "2024-09-18T10:13:25.618096",
+     "duration": 2.612244,
+     "end_time": "2024-09-23T13:03:37.333354",
      "exception": false,
-     "start_time": "2024-09-18T10:13:23.456044",
+     "start_time": "2024-09-23T13:03:34.721110",
      "status": "completed"
     },
     "tags": []
    },
    "outputs": [],
    "source": [
+    "#import LIB\n",
     "import numpy as np\n",
     "import pandas as pd\n",
     "import matplotlib.pyplot as plt\n",
@@ -58,38 +42,64 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "689715b3",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-09-23T13:03:37.342763Z",
+     "iopub.status.busy": "2024-09-23T13:03:37.342151Z",
+     "iopub.status.idle": "2024-09-23T13:03:50.037214Z",
+     "shell.execute_reply": "2024-09-23T13:03:50.035908Z"
+    },
+    "papermill": {
+     "duration": 12.703466,
+     "end_time": "2024-09-23T13:03:50.040837",
+     "exception": false,
+     "start_time": "2024-09-23T13:03:37.337371",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "#Load Data\n",
+    "df= pd.read_csv('/kaggle/input/credit-card-transactions-dataset/credit_card_transactions.csv').drop(columns=['Unnamed: 0'], axis=1)"
+   ]
+  },
+  {
    "cell_type": "markdown",
-   "id": "03165dba",
+   "id": "e42ca3da",
    "metadata": {
     "papermill": {
-     "duration": 0.001535,
-     "end_time": "2024-09-18T10:13:25.621670",
+     "duration": 0.004359,
+     "end_time": "2024-09-23T13:03:50.050090",
      "exception": false,
-     "start_time": "2024-09-18T10:13:25.620135",
+     "start_time": "2024-09-23T13:03:50.045731",
      "status": "completed"
     },
     "tags": []
    },
    "source": [
-    "## Load Data"
+    "## PREPROCESSING"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "1c805fb3",
+   "execution_count": 3,
+   "id": "4d2cde41",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-09-18T10:13:25.627224Z",
-     "iopub.status.busy": "2024-09-18T10:13:25.626229Z",
-     "iopub.status.idle": "2024-09-18T10:13:40.238258Z",
-     "shell.execute_reply": "2024-09-18T10:13:40.237271Z"
+     "iopub.execute_input": "2024-09-23T13:03:50.060562Z",
+     "iopub.status.busy": "2024-09-23T13:03:50.060098Z",
+     "iopub.status.idle": "2024-09-23T13:03:52.394458Z",
+     "shell.execute_reply": "2024-09-23T13:03:52.393297Z"
     },
     "papermill": {
-     "duration": 14.616903,
-     "end_time": "2024-09-18T10:13:40.240283",
+     "duration": 2.342755,
+     "end_time": "2024-09-23T13:03:52.397599",
      "exception": false,
-     "start_time": "2024-09-18T10:13:25.623380",
+     "start_time": "2024-09-23T13:03:50.054844",
      "status": "completed"
     },
     "tags": []
@@ -99,6 +109,49 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
+      "  trans_date_trans_time            cc_num                            merchant  \\\n",
+      "0   2019-01-01 00:00:18  2703186189652095          fraud_Rippin, Kub and Mann   \n",
+      "1   2019-01-01 00:00:44      630423337322     fraud_Heller, Gutmann and Zieme   \n",
+      "2   2019-01-01 00:00:51    38859492057661                fraud_Lind-Buckridge   \n",
+      "3   2019-01-01 00:01:16  3534093764340240  fraud_Kutch, Hermiston and Farrell   \n",
+      "4   2019-01-01 00:03:06   375534208663984                 fraud_Keeling-Crist   \n",
+      "\n",
+      "        category     amt      first     last gender  \\\n",
+      "0       misc_net    4.97   Jennifer    Banks      F   \n",
+      "1    grocery_pos  107.23  Stephanie     Gill      F   \n",
+      "2  entertainment  220.11     Edward  Sanchez      M   \n",
+      "3  gas_transport   45.00     Jeremy    White      M   \n",
+      "4       misc_pos   41.96      Tyler   Garcia      M   \n",
+      "\n",
+      "                         street            city  ...      long  city_pop  \\\n",
+      "0                561 Perry Cove  Moravian Falls  ...  -81.1781      3495   \n",
+      "1  43039 Riley Greens Suite 393          Orient  ... -118.2105       149   \n",
+      "2      594 White Dale Suite 530      Malad City  ... -112.2620      4154   \n",
+      "3   9443 Cynthia Court Apt. 038         Boulder  ... -112.1138      1939   \n",
+      "4              408 Bradley Rest        Doe Hill  ...  -79.4629        99   \n",
+      "\n",
+      "                                 job         dob  \\\n",
+      "0          Psychologist, counselling  1988-03-09   \n",
+      "1  Special educational needs teacher  1978-06-21   \n",
+      "2        Nature conservation officer  1962-01-19   \n",
+      "3                    Patent attorney  1967-01-12   \n",
+      "4     Dance movement psychotherapist  1986-03-28   \n",
+      "\n",
+      "                          trans_num   unix_time  merch_lat  merch_long  \\\n",
+      "0  0b242abb623afc578575680df30655b9  1325376018  36.011293  -82.048315   \n",
+      "1  1f76529f8574734946361c461b024d99  1325376044  49.159047 -118.186462   \n",
+      "2  a1a22d70485983eac12b5b88dad1cf95  1325376051  43.150704 -112.154481   \n",
+      "3  6b849c168bdad6f867558c3793159a81  1325376076  47.034331 -112.561071   \n",
+      "4  a41d7549acf90789359a9aa5346dcb46  1325376186  38.674999  -78.632459   \n",
+      "\n",
+      "   is_fraud  merch_zipcode  \n",
+      "0         0        28705.0  \n",
+      "1         0            NaN  \n",
+      "2         0        83236.0  \n",
+      "3         0            NaN  \n",
+      "4         0        22844.0  \n",
+      "\n",
+      "[5 rows x 23 columns]\n",
       "<class 'pandas.core.frame.DataFrame'>\n",
       "RangeIndex: 1296675 entries, 0 to 1296674\n",
       "Data columns (total 23 columns):\n",
@@ -129,9 +182,84 @@
       " 22  merch_zipcode          1100702 non-null  float64\n",
       "dtypes: float64(6), int64(5), object(12)\n",
       "memory usage: 227.5+ MB\n",
-      "duplicates: 0\n"
+      "None\n",
+      "             cc_num           amt           zip           lat          long  \\\n",
+      "count  1.296675e+06  1.296675e+06  1.296675e+06  1.296675e+06  1.296675e+06   \n",
+      "mean   4.171920e+17  7.035104e+01  4.880067e+04  3.853762e+01 -9.022634e+01   \n",
+      "std    1.308806e+18  1.603160e+02  2.689322e+04  5.075808e+00  1.375908e+01   \n",
+      "min    6.041621e+10  1.000000e+00  1.257000e+03  2.002710e+01 -1.656723e+02   \n",
+      "25%    1.800429e+14  9.650000e+00  2.623700e+04  3.462050e+01 -9.679800e+01   \n",
+      "50%    3.521417e+15  4.752000e+01  4.817400e+04  3.935430e+01 -8.747690e+01   \n",
+      "75%    4.642255e+15  8.314000e+01  7.204200e+04  4.194040e+01 -8.015800e+01   \n",
+      "max    4.992346e+18  2.894890e+04  9.978300e+04  6.669330e+01 -6.795030e+01   \n",
+      "\n",
+      "           city_pop     unix_time     merch_lat    merch_long      is_fraud  \\\n",
+      "count  1.296675e+06  1.296675e+06  1.296675e+06  1.296675e+06  1.296675e+06   \n",
+      "mean   8.882444e+04  1.349244e+09  3.853734e+01 -9.022646e+01  5.788652e-03   \n",
+      "std    3.019564e+05  1.284128e+07  5.109788e+00  1.377109e+01  7.586269e-02   \n",
+      "min    2.300000e+01  1.325376e+09  1.902779e+01 -1.666712e+02  0.000000e+00   \n",
+      "25%    7.430000e+02  1.338751e+09  3.473357e+01 -9.689728e+01  0.000000e+00   \n",
+      "50%    2.456000e+03  1.349250e+09  3.936568e+01 -8.743839e+01  0.000000e+00   \n",
+      "75%    2.032800e+04  1.359385e+09  4.195716e+01 -8.023680e+01  0.000000e+00   \n",
+      "max    2.906700e+06  1.371817e+09  6.751027e+01 -6.695090e+01  1.000000e+00   \n",
+      "\n",
+      "       merch_zipcode  \n",
+      "count   1.100702e+06  \n",
+      "mean    4.682575e+04  \n",
+      "std     2.583400e+04  \n",
+      "min     1.001000e+03  \n",
+      "25%     2.511400e+04  \n",
+      "50%     4.586000e+04  \n",
+      "75%     6.831900e+04  \n",
+      "max     9.940300e+04  \n"
      ]
+    }
+   ],
+   "source": [
+    "#View orginal dataset\n",
+    "print(df.head())\n",
+    "print(df.info())\n",
+    "print(df.describe())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "83df3209",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003823,
+     "end_time": "2024-09-23T13:03:52.405412",
+     "exception": false,
+     "start_time": "2024-09-23T13:03:52.401589",
+     "status": "completed"
     },
+    "tags": []
+   },
+   "source": [
+    "### Drop nonuse column"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "89f60407",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-09-23T13:03:52.415429Z",
+     "iopub.status.busy": "2024-09-23T13:03:52.414484Z",
+     "iopub.status.idle": "2024-09-23T13:03:52.686057Z",
+     "shell.execute_reply": "2024-09-23T13:03:52.684798Z"
+    },
+    "papermill": {
+     "duration": 0.279235,
+     "end_time": "2024-09-23T13:03:52.688516",
+     "exception": false,
+     "start_time": "2024-09-23T13:03:52.409281",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
     {
      "data": {
       "text/html": [
@@ -154,22 +282,16 @@
        "    <tr style=\"text-align: right;\">\n",
        "      <th></th>\n",
        "      <th>trans_date_trans_time</th>\n",
-       "      <th>cc_num</th>\n",
        "      <th>merchant</th>\n",
        "      <th>category</th>\n",
        "      <th>amt</th>\n",
-       "      <th>first</th>\n",
-       "      <th>last</th>\n",
        "      <th>gender</th>\n",
-       "      <th>street</th>\n",
        "      <th>city</th>\n",
-       "      <th>...</th>\n",
+       "      <th>state</th>\n",
+       "      <th>lat</th>\n",
        "      <th>long</th>\n",
-       "      <th>city_pop</th>\n",
        "      <th>job</th>\n",
        "      <th>dob</th>\n",
-       "      <th>trans_num</th>\n",
-       "      <th>unix_time</th>\n",
        "      <th>merch_lat</th>\n",
        "      <th>merch_long</th>\n",
        "      <th>is_fraud</th>\n",
@@ -180,22 +302,16 @@
        "    <tr>\n",
        "      <th>0</th>\n",
        "      <td>2019-01-01 00:00:18</td>\n",
-       "      <td>2703186189652095</td>\n",
        "      <td>fraud_Rippin, Kub and Mann</td>\n",
        "      <td>misc_net</td>\n",
        "      <td>4.97</td>\n",
-       "      <td>Jennifer</td>\n",
-       "      <td>Banks</td>\n",
        "      <td>F</td>\n",
-       "      <td>561 Perry Cove</td>\n",
        "      <td>Moravian Falls</td>\n",
-       "      <td>...</td>\n",
+       "      <td>NC</td>\n",
+       "      <td>36.0788</td>\n",
        "      <td>-81.1781</td>\n",
-       "      <td>3495</td>\n",
        "      <td>Psychologist, counselling</td>\n",
        "      <td>1988-03-09</td>\n",
-       "      <td>0b242abb623afc578575680df30655b9</td>\n",
-       "      <td>1325376018</td>\n",
        "      <td>36.011293</td>\n",
        "      <td>-82.048315</td>\n",
        "      <td>0</td>\n",
@@ -204,22 +320,16 @@
        "    <tr>\n",
        "      <th>1</th>\n",
        "      <td>2019-01-01 00:00:44</td>\n",
-       "      <td>630423337322</td>\n",
        "      <td>fraud_Heller, Gutmann and Zieme</td>\n",
        "      <td>grocery_pos</td>\n",
        "      <td>107.23</td>\n",
-       "      <td>Stephanie</td>\n",
-       "      <td>Gill</td>\n",
        "      <td>F</td>\n",
-       "      <td>43039 Riley Greens Suite 393</td>\n",
        "      <td>Orient</td>\n",
-       "      <td>...</td>\n",
+       "      <td>WA</td>\n",
+       "      <td>48.8878</td>\n",
        "      <td>-118.2105</td>\n",
-       "      <td>149</td>\n",
        "      <td>Special educational needs teacher</td>\n",
        "      <td>1978-06-21</td>\n",
-       "      <td>1f76529f8574734946361c461b024d99</td>\n",
-       "      <td>1325376044</td>\n",
        "      <td>49.159047</td>\n",
        "      <td>-118.186462</td>\n",
        "      <td>0</td>\n",
@@ -228,136 +338,120 @@
        "    <tr>\n",
        "      <th>2</th>\n",
        "      <td>2019-01-01 00:00:51</td>\n",
-       "      <td>38859492057661</td>\n",
        "      <td>fraud_Lind-Buckridge</td>\n",
        "      <td>entertainment</td>\n",
        "      <td>220.11</td>\n",
-       "      <td>Edward</td>\n",
-       "      <td>Sanchez</td>\n",
        "      <td>M</td>\n",
-       "      <td>594 White Dale Suite 530</td>\n",
        "      <td>Malad City</td>\n",
-       "      <td>...</td>\n",
+       "      <td>ID</td>\n",
+       "      <td>42.1808</td>\n",
        "      <td>-112.2620</td>\n",
-       "      <td>4154</td>\n",
        "      <td>Nature conservation officer</td>\n",
        "      <td>1962-01-19</td>\n",
-       "      <td>a1a22d70485983eac12b5b88dad1cf95</td>\n",
-       "      <td>1325376051</td>\n",
        "      <td>43.150704</td>\n",
        "      <td>-112.154481</td>\n",
        "      <td>0</td>\n",
        "      <td>83236.0</td>\n",
        "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>2019-01-01 00:01:16</td>\n",
-       "      <td>3534093764340240</td>\n",
-       "      <td>fraud_Kutch, Hermiston and Farrell</td>\n",
-       "      <td>gas_transport</td>\n",
-       "      <td>45.00</td>\n",
-       "      <td>Jeremy</td>\n",
-       "      <td>White</td>\n",
-       "      <td>M</td>\n",
-       "      <td>9443 Cynthia Court Apt. 038</td>\n",
-       "      <td>Boulder</td>\n",
-       "      <td>...</td>\n",
-       "      <td>-112.1138</td>\n",
-       "      <td>1939</td>\n",
-       "      <td>Patent attorney</td>\n",
-       "      <td>1967-01-12</td>\n",
-       "      <td>6b849c168bdad6f867558c3793159a81</td>\n",
-       "      <td>1325376076</td>\n",
-       "      <td>47.034331</td>\n",
-       "      <td>-112.561071</td>\n",
-       "      <td>0</td>\n",
-       "      <td>NaN</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>2019-01-01 00:03:06</td>\n",
-       "      <td>375534208663984</td>\n",
-       "      <td>fraud_Keeling-Crist</td>\n",
-       "      <td>misc_pos</td>\n",
-       "      <td>41.96</td>\n",
-       "      <td>Tyler</td>\n",
-       "      <td>Garcia</td>\n",
-       "      <td>M</td>\n",
-       "      <td>408 Bradley Rest</td>\n",
-       "      <td>Doe Hill</td>\n",
-       "      <td>...</td>\n",
-       "      <td>-79.4629</td>\n",
-       "      <td>99</td>\n",
-       "      <td>Dance movement psychotherapist</td>\n",
-       "      <td>1986-03-28</td>\n",
-       "      <td>a41d7549acf90789359a9aa5346dcb46</td>\n",
-       "      <td>1325376186</td>\n",
-       "      <td>38.674999</td>\n",
-       "      <td>-78.632459</td>\n",
-       "      <td>0</td>\n",
-       "      <td>22844.0</td>\n",
-       "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
-       "<p>5 rows × 23 columns</p>\n",
        "</div>"
       ],
       "text/plain": [
-       "  trans_date_trans_time            cc_num                            merchant  \\\n",
-       "0   2019-01-01 00:00:18  2703186189652095          fraud_Rippin, Kub and Mann   \n",
-       "1   2019-01-01 00:00:44      630423337322     fraud_Heller, Gutmann and Zieme   \n",
-       "2   2019-01-01 00:00:51    38859492057661                fraud_Lind-Buckridge   \n",
-       "3   2019-01-01 00:01:16  3534093764340240  fraud_Kutch, Hermiston and Farrell   \n",
-       "4   2019-01-01 00:03:06   375534208663984                 fraud_Keeling-Crist   \n",
+       "  trans_date_trans_time                         merchant       category  \\\n",
+       "0   2019-01-01 00:00:18       fraud_Rippin, Kub and Mann       misc_net   \n",
+       "1   2019-01-01 00:00:44  fraud_Heller, Gutmann and Zieme    grocery_pos   \n",
+       "2   2019-01-01 00:00:51             fraud_Lind-Buckridge  entertainment   \n",
        "\n",
-       "        category     amt      first     last gender  \\\n",
-       "0       misc_net    4.97   Jennifer    Banks      F   \n",
-       "1    grocery_pos  107.23  Stephanie     Gill      F   \n",
-       "2  entertainment  220.11     Edward  Sanchez      M   \n",
-       "3  gas_transport   45.00     Jeremy    White      M   \n",
-       "4       misc_pos   41.96      Tyler   Garcia      M   \n",
+       "      amt gender            city state      lat      long  \\\n",
+       "0    4.97      F  Moravian Falls    NC  36.0788  -81.1781   \n",
+       "1  107.23      F          Orient    WA  48.8878 -118.2105   \n",
+       "2  220.11      M      Malad City    ID  42.1808 -112.2620   \n",
        "\n",
-       "                         street            city  ...      long  city_pop  \\\n",
-       "0                561 Perry Cove  Moravian Falls  ...  -81.1781      3495   \n",
-       "1  43039 Riley Greens Suite 393          Orient  ... -118.2105       149   \n",
-       "2      594 White Dale Suite 530      Malad City  ... -112.2620      4154   \n",
-       "3   9443 Cynthia Court Apt. 038         Boulder  ... -112.1138      1939   \n",
-       "4              408 Bradley Rest        Doe Hill  ...  -79.4629        99   \n",
-       "\n",
-       "                                 job         dob  \\\n",
-       "0          Psychologist, counselling  1988-03-09   \n",
-       "1  Special educational needs teacher  1978-06-21   \n",
-       "2        Nature conservation officer  1962-01-19   \n",
-       "3                    Patent attorney  1967-01-12   \n",
-       "4     Dance movement psychotherapist  1986-03-28   \n",
-       "\n",
-       "                          trans_num   unix_time  merch_lat  merch_long  \\\n",
-       "0  0b242abb623afc578575680df30655b9  1325376018  36.011293  -82.048315   \n",
-       "1  1f76529f8574734946361c461b024d99  1325376044  49.159047 -118.186462   \n",
-       "2  a1a22d70485983eac12b5b88dad1cf95  1325376051  43.150704 -112.154481   \n",
-       "3  6b849c168bdad6f867558c3793159a81  1325376076  47.034331 -112.561071   \n",
-       "4  a41d7549acf90789359a9aa5346dcb46  1325376186  38.674999  -78.632459   \n",
+       "                                 job         dob  merch_lat  merch_long  \\\n",
+       "0          Psychologist, counselling  1988-03-09  36.011293  -82.048315   \n",
+       "1  Special educational needs teacher  1978-06-21  49.159047 -118.186462   \n",
+       "2        Nature conservation officer  1962-01-19  43.150704 -112.154481   \n",
        "\n",
        "   is_fraud  merch_zipcode  \n",
        "0         0        28705.0  \n",
        "1         0            NaN  \n",
-       "2         0        83236.0  \n",
-       "3         0            NaN  \n",
-       "4         0        22844.0  \n",
-       "\n",
-       "[5 rows x 23 columns]"
+       "2         0        83236.0  "
       ]
      },
-     "execution_count": 2,
      "metadata": {},
-     "output_type": "execute_result"
+     "output_type": "display_data"
     }
    ],
    "source": [
-    "df= pd.read_csv('/kaggle/input/credit-card-transactions-dataset/credit_card_transactions.csv').drop(columns=['Unnamed: 0'], axis=1)\n",
-    "df.info()\n",
-    "print(f'duplicates: {df.duplicated().sum()}')\n",
-    "df.head()"
+    "rm_cols = [\"cc_num\", \"first\", \"last\", \"street\", \"zip\", \"city_pop\", \"unix_time\", \"trans_num\"]\n",
+    "df = df.drop(columns = rm_cols)\n",
+    "display(df.head(3))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d4437143",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003948,
+     "end_time": "2024-09-23T13:03:52.697350",
+     "exception": false,
+     "start_time": "2024-09-23T13:03:52.693402",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "### Fill Nan"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "65d24ed7",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-09-23T13:03:52.707404Z",
+     "iopub.status.busy": "2024-09-23T13:03:52.706953Z",
+     "iopub.status.idle": "2024-09-23T13:03:53.831505Z",
+     "shell.execute_reply": "2024-09-23T13:03:53.830260Z"
+    },
+    "papermill": {
+     "duration": 1.132588,
+     "end_time": "2024-09-23T13:03:53.834046",
+     "exception": false,
+     "start_time": "2024-09-23T13:03:52.701458",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "trans_date_trans_time         0\n",
+      "merchant                      0\n",
+      "category                      0\n",
+      "amt                           0\n",
+      "gender                        0\n",
+      "city                          0\n",
+      "state                         0\n",
+      "lat                           0\n",
+      "long                          0\n",
+      "job                           0\n",
+      "dob                           0\n",
+      "merch_lat                     0\n",
+      "merch_long                    0\n",
+      "is_fraud                      0\n",
+      "merch_zipcode            195973\n",
+      "dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(df.isnull().sum())"
    ]
   }
  ],
@@ -396,14 +490,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 19.914809,
-   "end_time": "2024-09-18T10:13:40.961885",
+   "duration": 22.717974,
+   "end_time": "2024-09-23T13:03:54.560836",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2024-09-18T10:13:21.047076",
+   "start_time": "2024-09-23T13:03:31.842862",
    "version": "2.6.0"
   }
  },
